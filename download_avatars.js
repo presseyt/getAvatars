@@ -1,5 +1,6 @@
 
 const request = require('request');
+const fs = require('fs');
 const GITHUB_TOKEN = require('./secret.js').GITHUB_TOKEN;
 
 
@@ -35,4 +36,15 @@ function printAvatarURLs(err, body){
   });
 }
 
-getRepoContributors('jquery', 'jquery', printAvatarURLs);
+function downloadImageByURL(url, filePath) {
+  request.get(url)
+         .on('err', function(err){
+          throw err;
+         })
+         .pipe(fs.createWriteStream(filePath));
+}
+
+downloadImageByURL("https://avatars2.githubusercontent.com/u/2741?v=3&s=466", "avatars/kvirani.jpg");
+
+//Code that prints a list of avatar URLs to the console:
+//getRepoContributors('jquery', 'jquery', printAvatarURLs);
