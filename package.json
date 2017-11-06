@@ -1,0 +1,22 @@
+{
+  "name": "get-avatars",
+  "version": "1.0.0",
+  "description": "A command line node app that uses http to retrieve content from github using their api and writes the content to the disc",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/presseyt/getAvatars.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/presseyt/getAvatars/issues"
+  },
+  "homepage": "https://github.com/presseyt/getAvatars#readme",
+  "dependencies": {
+    "request": "^2.83.0"
+  }
+}
