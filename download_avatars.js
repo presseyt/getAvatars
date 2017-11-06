@@ -58,6 +58,16 @@ function downloadAllImages(err, body){
 
 
 
+var args = process.argv.slice(2);
+if (args.length < 2){
+  console.log('Error.  Please provide the repoOwner and repoName.');
+}
+else{
+  getRepoContributors(args[0], args[1], downloadAllImages);
+}
+
+
+
 //Test getRepoContributors by printing a list of avatar URLs to the console:
 //getRepoContributors('jquery', 'jquery', printAvatarURLs);
 
@@ -66,7 +76,7 @@ function downloadAllImages(err, body){
 
 
 //download all images:
-getRepoContributors('jquery', 'jquery', downloadAllImages);
+//getRepoContributors('jquery', 'jquery', downloadAllImages);
 //getRepoContributors('dds-bridge', 'dds', downloadAllImages);
 
 
