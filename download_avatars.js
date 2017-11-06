@@ -20,22 +20,7 @@ function getRepoContributors(repoOwner, repoName, cb){
   });
 }
 
-
-//a simple function to output the body
-function printResults(err, body){
-  console.log('Errors: ', err);
-  console.log('Body: ', body);
-}
-
-//prints to the screen a list of contributors and the URLs of their avatars
-function printAvatarURLs(err, body){
-  if (err) throw err;
-
-  JSON.parse(body).forEach(function(contributor){
-    console.log(contributor.login, ':', ' '.repeat(15 - contributor.login.length), contributor.avatar_url);
-  });
-}
-
+// downloads from the url into filePath
 function downloadImageByURL(url, filePath) {
   request.get(url)
          .on('err', function(err){
@@ -44,7 +29,54 @@ function downloadImageByURL(url, filePath) {
          .pipe(fs.createWriteStream(filePath));
 }
 
-downloadImageByURL("https://avatars2.githubusercontent.com/u/2741?v=3&s=466", "avatars/kvirani.jpg");
 
-//Code that prints a list of avatar URLs to the console:
+
+//a simple  callback function to output the body
+function printResults(err, body){
+  console.log('Errors: ', err);
+  console.log('Body: ', body);
+}
+
+//a callback function prints to the screen a list of contributors and the URLs of their avatars
+function printAvatarURLs(err, body){
+  if (err) throw err;
+
+  JSON.parse(body).forEach(function(contributor){
+    console.log(contributor.login, ':', ' '.repeat(15 - contributor.login.length), contributor.avatar_url);
+  });
+}
+
+//a callback function to download all of the images from the URLs given in the body
+function downloadAllImages(err, body){
+  if (err) throw err;
+
+  JSON.parse(body).forEach(function(contributor){
+    downloadImageByURL(contributor.avatar_url, 'avatars/' + contributor.login + '.jpg');
+  });
+}
+
+
+
+
+//Test getRepoContributors by printing a list of avatar URLs to the console:
 //getRepoContributors('jquery', 'jquery', printAvatarURLs);
+
+//Test downloadImageByURL by hardcoding links
+//downloadImageByURL("https://avatars2.githubusercontent.com/u/2741?v=3&s=466", "avatars/kvirani.jpg");
+
+
+//download all images:
+getRepoContributors('jquery', 'jquery', downloadAllImages);
+//getRepoContributors('dds-bridge', 'dds', downloadAllImages);
+
+
+
+
+
+
+
+
+
+
+
+
