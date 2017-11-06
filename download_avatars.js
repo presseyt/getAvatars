@@ -29,23 +29,6 @@ function downloadImageByURL(url, filePath) {
          .pipe(fs.createWriteStream(filePath));
 }
 
-
-
-//a simple  callback function to output the body
-function printResults(err, body){
-  console.log('Errors: ', err);
-  console.log('Body: ', body);
-}
-
-//a callback function prints to the screen a list of contributors and the URLs of their avatars
-function printAvatarURLs(err, body){
-  if (err) throw err;
-
-  JSON.parse(body).forEach(function(contributor){
-    console.log(contributor.login, ':', ' '.repeat(15 - contributor.login.length), contributor.avatar_url);
-  });
-}
-
 //a callback function to download all of the images from the URLs given in the body
 function downloadAllImages(err, body){
   if (err) throw err;
@@ -57,36 +40,14 @@ function downloadAllImages(err, body){
 
 
 
-
+//get arguments from the command line
 var args = process.argv.slice(2);
-if (args.length < 2){
+if (args.length < 2){ //write an error message if two arguments are not passed in
   console.log('Error.  Please provide the repoOwner and repoName.');
 }
-else{
+else{ //if we're passed two arguments, run the code.
   getRepoContributors(args[0], args[1], downloadAllImages);
 }
-
-
-
-//Test getRepoContributors by printing a list of avatar URLs to the console:
-//getRepoContributors('jquery', 'jquery', printAvatarURLs);
-
-//Test downloadImageByURL by hardcoding links
-//downloadImageByURL("https://avatars2.githubusercontent.com/u/2741?v=3&s=466", "avatars/kvirani.jpg");
-
-
-//download all images:
-//getRepoContributors('jquery', 'jquery', downloadAllImages);
-//getRepoContributors('dds-bridge', 'dds', downloadAllImages);
-
-
-
-
-
-
-
-
-
 
 
 
